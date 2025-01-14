@@ -1,0 +1,27 @@
+{
+  "name": "tombroucke/otomaties-store-locator",
+  "type": "package",
+  "description": "Show a list of stores on a map",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tom Broucke",
+      "email": "tom@tombroucke.be"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Otomaties\\StoreLocator\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^8.0"
+  },
+  "extra": {
+    "acorn": {
+      "providers": [
+        "Otomaties\\StoreLocator\\Providers\\StoreLocatorServiceProvider"
+      ]
+    }
+  }
+}
