@@ -1,6 +1,6 @@
 {
   "name": "tombroucke/otomaties-store-locator",
-  "type": "package",
+  "type": "wordpress-plugin",
   "description": "Show a list of stores on a map",
   "license": "MIT",
   "authors": [
