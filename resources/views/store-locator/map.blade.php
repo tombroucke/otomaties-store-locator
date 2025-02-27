@@ -19,7 +19,7 @@
         </a>
         <a
           class="{{ apply_filters('otomaties/store-locator/navigate_link_class', 'store__link', $store) }}"
-          href="https://www.google.com/maps/dir/?api=1&destination={{ $store->location()->lat() }}, {{ $store->location()->lng() }}"
+          href="https://www.google.com/maps/dir/?api=1&travelmode=driving&destination={{ $store->location()->lat() }}, {{ $store->location()->lng() }}"
           target="_blank"
         >
           {{ __('Navigate', 'otomaties-store-locator') }}
