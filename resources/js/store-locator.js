@@ -7,6 +7,7 @@ export default class StoreLocator {
         this.markers = [];
         this.mapEl = this.el.querySelector('.otomaties-store-locator__map');
         this.filtersEl = this.el.querySelector('.otomaties-store-locator__filters');
+        this.openWindow = null;
         this.options = {
             zoom: parseInt(el.getAttribute('data-zoom')),
         }
@@ -31,17 +32,19 @@ export default class StoreLocator {
         });
         return markers;
     }
-
+    
     renderMap()
     {
         const markers = this.getMarkersFromHtml();
-
+        
         this.map = new google.maps.Map(this.mapEl, {
             zoom: this.options.zoom,
             center: new google.maps.LatLng(50.85045, 4.34878),
             mapTypeId: google.maps.MapTypeId.ROADMAP,
         });
-
+        
+        let storeLocator = this;
+        
         for (let i = 0; i < markers.length; i++) {
             let marker = new google.maps.Marker({
                 position: markers[i].latLng,
@@ -49,40 +52,46 @@ export default class StoreLocator {
                 map: this.map,
                 categories: markers[i].categories,
             });
+            
             const infowindow = new google.maps.InfoWindow();
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
-              return function () {
-                  infowindow.setContent(markers[i].content);
-                  infowindow.open(this.map, marker);
-              }
+                return function () {
+                    if (storeLocator.openWindow) {
+                        storeLocator.openWindow.close();
+                    }
+                    infowindow.setContent(markers[i].content);
+                    infowindow.setOptions({minWidth: 250, maxWidth: 350});
+                    infowindow.open(this.map, marker);
+                    storeLocator.openWindow = infowindow;
+                }
             })(marker, i));
-
+            
             this.markers.push(marker);
         }
         this.centerMap();
     }
-
+    
     centerMap()
     {
-      let markers = this.markers.filter(marker => marker.map !== null);
-
-      if (!markers.length) {
-        markers = this.markers;
-      }
-
-      var bounds = new google.maps.LatLngBounds();
-      for (var i = 0; i < markers.length; i++) {
-          const latLng = markers[i].position;
-          bounds.extend(latLng);
-      }
-
-      if (false || markers.length > 1) {
-          this.map.fitBounds(bounds);
-      } else {
-          this.map.setCenter(bounds.getCenter());
-      }
+        let markers = this.markers.filter(marker => marker.map !== null);
+        
+        if (!markers.length) {
+            markers = this.markers;
+        }
+        
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < markers.length; i++) {
+            const latLng = markers[i].position;
+            bounds.extend(latLng);
+        }
+        
+        if (false || markers.length > 1) {
+            this.map.fitBounds(bounds);
+        } else {
+            this.map.setCenter(bounds.getCenter());
+        }
     }
-
+    
     bindEvents()
     {
         this.filtersEl.addEventListener('change', () => {
@@ -91,7 +100,7 @@ export default class StoreLocator {
             this.filter(categories);
         });
     }
-
+    
     filter(categories)
     {
         for (let i = 0; i < this.markers.length; i++) {
@@ -101,7 +110,7 @@ export default class StoreLocator {
                 this.markers[i].setMap(null);
             }
         }
-
+        
         this.centerMap();
     }
 }

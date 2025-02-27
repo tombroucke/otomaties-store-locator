@@ -43,6 +43,7 @@ class StoreLocatorServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        
         $this->loadViewsFrom(
             __DIR__.'/../../resources/views',
             'StoreLocator',
@@ -58,6 +59,10 @@ class StoreLocatorServiceProvider extends ServiceProvider
 
     private function initPostTypes() : void
     {
+        add_action('init', function () {
+            load_plugin_textdomain('otomaties-store-locator', false, dirname(plugin_basename(__FILE__), 3) . '/resources/languages');
+        });
+
         collect([
             'PostTypes',
             'Taxonomies',

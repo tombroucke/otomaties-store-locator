@@ -9,8 +9,21 @@
       {!! $store->marker() ? 'data-marker="' . $store->marker() . '"' : '' !!}
     >
       <div class="store__content">
-        <h4 class="store__title">{{ $store->title() }}</h4>
+        <h4 class="store__title"><a href="{{ $store->url() }}">{{ $store->title() }}</a></h4>
         {!! $store->markerContent() !!}
+        <a
+          class="{{ apply_filters('otomaties/store-locator/store_link_class', 'store__link', $store) }}"
+          href="{{ $store->url() }}"
+        >
+          {{ __('More info', 'otomaties-store-locator') }}
+        </a>
+        <a
+          class="{{ apply_filters('otomaties/store-locator/navigate_link_class', 'store__link', $store) }}"
+          href="https://www.google.com/maps/dir/?api=1&destination={{ $store->location()->lat() }}, {{ $store->location()->lng() }}"
+          target="_blank"
+        >
+          {{ __('Navigate', 'otomaties-store-locator') }}
+        </a>
       </div>
     </div>
   @endforeach
