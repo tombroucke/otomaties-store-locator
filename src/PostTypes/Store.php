@@ -29,6 +29,7 @@ class Store implements PostType
             'labels' => Labels::postType($postSingularName, $postPluralName),
             'dashboard_activity' => true,
             'supports' => ['title', 'editor'],
+            'capability_type' => 'store',
             'admin_cols' => [
                 'store_category' => [
                     'title'          => __('Category', 'otomaties-store-locator'),
@@ -42,6 +43,7 @@ class Store implements PostType
             ],
             'rewrite' => [
                 'slug' => apply_filters('otomaties/store-locator/store_slug', 'store'),
+                'with_front' => false
             ],
         ];
 
