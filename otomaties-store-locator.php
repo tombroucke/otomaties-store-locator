@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Otomaties Store Locator
  * Description:       A simple store locator plugin for WordPress
- * Version:           1.1.2
+ * Version:           1.1.3
  * Author:            Tom Broucke
  * Author URI:        https://tombroucke.be/
  * License:           GPL-2.0+
