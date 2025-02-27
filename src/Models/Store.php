@@ -19,7 +19,7 @@ class Store extends Post
 
     public function categories() : Collection
     {
-        return collect(get_the_terms($this->getId(), 'store_category'));
+        return collect(get_the_terms($this->getId(), 'store_category'))->filter();
     }
 
     public function category(): ?\WP_Term
